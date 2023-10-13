@@ -501,10 +501,6 @@ def obj(x):
           
 
     y = a*float(l_total*100)+b*float(bw_total/10)
-    
-    with open("defitness300.csv", "a") as fp:
-      fp.write("{:10.2f}".format(y))
-      fp.write("\n")
        
     return y 
 
@@ -523,7 +519,7 @@ def check_bounds(mutated, bounds):
 def crossover(mutated, target, dims, cr): 
 
     p = rand(dims)   # generate a uniform random value for every dimension 
-    trial = [mutated[i] if p[i] < cr else target[i] for i in range(dims)]   # generate trial vector by binomial crossover 
+    trial = [mutated[i] if p[i] < cr else target[i] for i in range(dims)]   
     return trial 
 
 def differential_evolution(pop_size, bounds, iter, F, cr): 
@@ -561,20 +557,20 @@ def differential_evolution(pop_size, bounds, iter, F, cr):
                 pop[j] = trial
                 obj_all[j] = obj_trial 
             
-            best_obj= min(obj_all)  # find the best performing vector at each iteration
+            best_obj= min(obj_all)  
 
 
         if best_obj < prev_obj: 
             best_vector = pop[argmin(obj_all)] 
             prev_obj = best_obj
 
-        # with open("mydeobj300.csv", "a") as fp:
-        #     fp.write("{:10.2f}".format(best_obj))
-        #     fp.write("\n")
+        with open("mydeobj300.csv", "a") as fp:
+            fp.write("{:10.2f}".format(best_obj))
+            fp.write("\n")
 
         obj_iter.append(best_obj) 
 
-        # print('Iteration: %d f([%s]) = %.5f' % (i, around(best_vector, decimals=5), best_obj)) 
+        print('Iteration: %d f([%s]) = %.5f' % (i, around(best_vector, decimals=5), best_obj)) 
 
     return [best_vector, best_obj, obj_iter] 
 
